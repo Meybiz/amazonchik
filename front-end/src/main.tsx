@@ -12,7 +12,9 @@ import {
 } from "react-router-dom";
 import Home from './pages/Home';
 import Products from './pages/Products';
+import axios from 'axios';
 
+axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
