@@ -13,6 +13,10 @@ app.get("/api/products", (req: Request, res: Response) => {
     res.json(sampleProd);
 });
 
+app.get('/api/products/:slug', (req: Request, res: Response) => {
+    res.json(sampleProd.find((i) => i.slug === req.params.slug))
+})
+
 const PORT = 4000;
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);

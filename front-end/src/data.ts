@@ -1,4 +1,4 @@
-import { Product } from "./types/Products";
+import { Product } from "./types/Product";
 
 export const sampleProd:Product[] = [
     {
@@ -46,7 +46,7 @@ export const sampleProd:Product[] = [
         brand: "Nike",
         rating: 4.9,
         numReviews: 3,
-        countInStock: 19,
+        countInStock: 0,
         description: "Легкие штаны для повседневного спорта",
     }
 ]

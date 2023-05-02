@@ -12,3 +12,19 @@
   max-width: 450px;
   width: 100%;
 }
+
+.ratings span {
+  color: #ffd700;
+}
+
+.add, .out {
+  width: 180px;
+}
+
+.add, .out, .ratings, .card-text {
+  margin: 0px 0px 15px 15px
+}
+
+img.large {
+  max-width: 100%;
+}
