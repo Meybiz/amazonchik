@@ -1,21 +1,30 @@
-import express, { Request, Response } from "express";
+import express from "express";
+import dotenv from 'dotenv';
 import cors from 'cors';
-import { sampleProd } from './data';
+import mongoose from "mongoose";
+import { productRouter } from "./routers/prodRouter";
+import { sRouter } from "./routers/seedRout";
 
+
+dotenv.config();
 const app = express();
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/amazonchikdb';
+mongoose.set('strictQuery', true);
+
+mongoose.connect(MONGODB_URI).then(() => {
+    console.log("Connected to MongoDB");
+}).catch(() => {
+    console.log('Error DB')
+})
 app.use(
     cors({
         credentials: true,
         origin: 'http://localhost:5173'
     })
 )
-app.get("/api/products", (req: Request, res: Response) => {
-    res.json(sampleProd);
-});
+app.use('/api/products', productRouter)
+app.use('/api/seed', sRouter)
 
-app.get('/api/products/:slug', (req: Request, res: Response) => {
-    res.json(sampleProd.find((i) => i.slug === req.params.slug))
-})
 
 const PORT = 4000;
 app.listen(PORT, () => {

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -15,24 +15,27 @@ import Products from './pages/Products';
 import { HelmetProvider } from 'react-helmet-async';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
+import { StoreProv } from './Store.tsx';
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />}>
       <Route index={true} element={<Home />} />
       <Route path='product/:slug' element={<Products />} />
-      
+
     </Route>
   )
 );
 const queryClient = new QueryClient()
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false}/>
-      </QueryClientProvider>
-    </HelmetProvider>
+    <StoreProv>
+      <HelmetProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </HelmetProvider>
+    </StoreProv>
   </React.StrictMode>,
 )

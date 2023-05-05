@@ -5,7 +5,7 @@ import Loading from '../components/Loading';
 import Message from './../components/Message';
 import { getError } from './../utils';
 import { ApiEr } from '../types/ApiEr';
-import { Row, Col, ListGroup, Card, Badge } from 'react-bootstrap';
+import { Row, Col, ListGroup, Card, Badge, Button } from 'react-bootstrap';
 import Ratings from './../components/Ratings';
 export default function Products() {
   const par = useParams()
@@ -69,14 +69,21 @@ export default function Products() {
                         <Row>
                           <Col>Status:</Col>
                           <Col>
-                          {
-                            products.countInStock > 0 ? (
-                              <Badge bg="success">В наличии</Badge>
-                            ) : (
-                              <Badge bg="danger">Нет в наличии</Badge>
-                            )
-                          }</Col>
+                            {
+                              products.countInStock > 0 ? (
+                                <Badge bg="success">В наличии</Badge>
+                              ) : (
+                                <Badge bg="danger">Нет в наличии</Badge>
+                              )
+                            }</Col>
                         </Row>
+                      </ListGroup.Item>
+                      <ListGroup.Item>
+                        {products.countInStock > 0 && (
+                          <div className='d-grid'>
+                            <Button variant='primary'>Добавить в корзину</Button>
+                          </div>
+                        )}
                       </ListGroup.Item>
                     </ListGroup>
                   </Card.Body>
