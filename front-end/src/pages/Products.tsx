@@ -1,12 +1,15 @@
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGetProdDetailSlugQuery } from '../hooks/prodHook';
 import Loading from '../components/Loading';
 import Message from './../components/Message';
-import { getError } from './../utils';
+import { convertProdItem, getError } from './../utils';
 import { ApiEr } from '../types/ApiEr';
 import { Row, Col, ListGroup, Card, Badge, Button } from 'react-bootstrap';
 import Ratings from './../components/Ratings';
+import { Store } from '../Store';
+import { useContext } from 'react';
+import { toast } from 'react-toastify';
 export default function Products() {
   const par = useParams()
   const { slug } = par;
@@ -16,6 +19,24 @@ export default function Products() {
     isLoading,
     error,
   } = useGetProdDetailSlugQuery(slug!)
+  const navigate = useNavigate()
+  const { state, dispatch } = useContext(Store);
+  const { cart } = state
+
+  const addToCartHandler = () => {
+    const exist = cart.cartItems.find((x) => x._id === products!._id)
+    const quantity = exist ? exist.quantity + 1 : 1
+    if (products!.countInStock < quantity) {
+      toast.warn('Sorry. Product is out')
+      return
+    }
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: { ...convertProdItem(products!), quantity },
+    })
+    toast.success('Товар добавлен в корзину')
+    navigate('/cart')
+  }
   return isLoading ? (
     <Loading />
   )
@@ -81,7 +102,7 @@ export default function Products() {
                       <ListGroup.Item>
                         {products.countInStock > 0 && (
                           <div className='d-grid'>
-                            <Button variant='primary'>Добавить в корзину</Button>
+                            <Button onClick={addToCartHandler} variant='primary'>Добавить в корзину</Button>
                           </div>
                         )}
                       </ListGroup.Item>

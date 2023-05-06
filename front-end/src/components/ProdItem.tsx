@@ -2,9 +2,35 @@ import { Button, Card } from 'react-bootstrap';
 import { Product }  from '../types/Product';
 import { Link } from 'react-router-dom';
 import Ratings from './Ratings';
+import { useContext } from 'react';
+import { Store } from '../Store';
+import { CardItems } from '../types/CardType';
+import { convertProdItem } from '../utils';
+import { toast } from 'react-toastify';
 
 function ProdItem ({product}: {product: Product}) {
-    return <Card>
+    const {state, dispatch} = useContext(Store);
+    const {
+        cart: {
+            cartItems
+        }
+    } = state
+
+    const addToCartHandler = (item: CardItems) => {
+        const existItem = cartItems.find((x) => x._id === item._id)
+        const quantity = existItem ? existItem.quantity + 1 : 1
+        if (product.countInStock < quantity) {
+            alert('Sorry. Product is out')
+            return
+        } 
+        dispatch({
+            type: 'ADD_TO_CART',
+            payload: {...item, quantity},
+        })
+        toast.success('Товар добавлен в корзину')
+    }
+    return (
+        <Card>
         <Link to={`/product/${product.slug}`}>
             <img className='card-img-top' src={product.image} alt={product.name} />
         </Link>
@@ -20,10 +46,10 @@ function ProdItem ({product}: {product: Product}) {
                 Нет в наличии
             </Button>
         ) : (
-            <Button variant='primary' className='add'>Добавить в Корзину</Button>
+            <Button onClick={() => addToCartHandler(convertProdItem(product))} variant='primary' className='add'>Добавить в Корзину</Button>
         )
     }
     </Card>
-}
+    )}
 
 export default ProdItem
