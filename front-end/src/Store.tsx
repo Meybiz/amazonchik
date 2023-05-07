@@ -1,13 +1,15 @@
 import React from 'react';
 import { CardItems, Cart } from './types/CardType';
+import { UserInfo } from './types/UserInfo';
 
 type AppState = {
     mode: string
-    cart: Cart
-
+    cart: Cart,
+    userInfo?: UserInfo
 }
 
 const initialState: AppState = {
+    userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')!) : null,
     mode: localStorage.getItem('mode') ? localStorage.getItem('mode')! : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
     cart: {
             cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')!) : [],
@@ -29,7 +31,15 @@ type Action = | {
 {
     type: 'REMOVE_FROM_CART',
     payload: CardItems
+} |
+{
+    type: 'LOGIN',
+    payload: UserInfo
+} |
+{
+    type: 'SIGNOUT'
 }
+
 
 function reducer(state: AppState, action: Action): AppState {
     switch (action.type) {
@@ -50,6 +60,28 @@ function reducer(state: AppState, action: Action): AppState {
                 localStorage.setItem('cartItems', JSON.stringify(cartItems))
                 return {...state, cart: {...state.cart, cartItems}}
             }
+        case 'LOGIN':
+            return {...state, userInfo: action.payload}
+            case 'SIGNOUT':
+                return { 
+                    mode: 
+                        window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+                    cart: {
+                        cartItems: [],
+                        payMethod: 'PayPal',
+                        shipAddress: {
+                            fullName: '',
+                            address: '',
+                            postalCode: '',
+                            city: '',
+                            country: '',
+                        },
+                        itemPrice: 0,
+                        shipPrice: 0,
+                        taxprice: 0,
+                        totalPrice: 0
+                    },
+                }
                 default:
             return state
     }
