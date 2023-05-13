@@ -1,5 +1,6 @@
 import jwt  from 'jsonwebtoken'
 import { User } from './../model/userModel';
+import { NextFunction, Request, Response } from 'express';
 
 export const genToken = (user: User) => {
     return jwt.sign(
@@ -14,4 +15,23 @@ export const genToken = (user: User) => {
         expiresIn: '40d',
     }
     )
+}
+
+export const isAuth = (req: Request, res: Response, next: NextFunction) => {
+    const {authorization} = req.headers
+    if (authorization) {
+        const token: string = authorization.slice(7, authorization.length)
+        console.log(token)
+        const decode = jwt.verify(token, process.env.JWT_SECRET || 'somethingsecret')
+        req.user = decode as {
+            _id: string
+            name: string
+            email: string
+            isAdmin: boolean
+            token: string
+        }
+        next()
+    } else {
+        res.status(401).json({message: 'No Token'})
+    }
 }

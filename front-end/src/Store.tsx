@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardItems, Cart } from './types/CardType';
+import { CardItems, Cart, ShipAddress } from './types/CardType';
 import { UserInfo } from './types/UserInfo';
 
 type AppState = {
@@ -38,12 +38,22 @@ type Action = | {
 } |
 {
     type: 'SIGNOUT'
+} | {
+    type: 'SAVE_SHIP_ADDRESS',
+    payload: ShipAddress
+} |
+{
+    type: 'SAVE_PAY_METHOD',
+    payload: string
+} | {
+    type: 'CLEAR_CART', 
 }
 
 
 function reducer(state: AppState, action: Action): AppState {
     switch (action.type) {
         case 'SWITCH_MODE':
+            localStorage.setItem('mode', state.mode === 'dark' ? 'light' : 'dark')
             return {
                 ...state,
                 mode: state.mode === 'dark' ? 'light' : 'dark',
@@ -82,6 +92,25 @@ function reducer(state: AppState, action: Action): AppState {
                         totalPrice: 0
                     },
                 }
+                case 'SAVE_SHIP_ADDRESS':
+                    return {
+                        ...state,
+                        cart: {
+                            ...state.cart,
+                            shipAddress: action.payload
+                        }
+                    }
+                    case 'SAVE_PAY_METHOD':
+                        return {
+                            ...state,
+                            cart: {
+                                ...state.cart, payMethod: action.payload
+                            }
+                        }
+                        case 'CLEAR_CART':
+                            return {
+                                ...state, cart: {...state.cart, cartItems: []}
+                            }
                 default:
             return state
     }

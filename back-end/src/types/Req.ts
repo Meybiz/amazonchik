@@ -4,7 +4,7 @@ declare namespace Express {
         user: {
             _id: string
             name: string
-            enail: string
+            email: string
             isAdmin: boolean
             token: string
         }
