@@ -44,3 +44,51 @@ img.thumbnail {
   border-bottom: 0.3rem solid #c6a800;
   color: #c6a800;
 }
+
+.dropdown-menu[data-bs-popper] {
+  left: auto;
+  right: 5px;
+}
+
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 1.7rem;
+}
+
+a.header-link, .header-link > a {
+  border: 1px solid rgb(33,37,40);
+  border-radius: 1.5px;
+  color: #fff;
+  font-weight: bold;
+}
+
+a.header-link:hover, .header-link:hover > a:hover {
+  color: #fff;
+  border: 1px solid black
+}
+
+.header .dropdown-menu, .header .dropdown-item {
+  color: black;
+  background-color: white;
+}
+.header .dropdown-item:hover {
+  border: 1px solid rgba(33,37,40,0.8);
+}
+
+.sub-header {
+  background-color: #232f3e;
+}
+
+.cart-badge {
+  position: absolute;
+  color: #f08000;
+  margin-left: 16px;
+  margin-top: -5px;
+  font-weight: bold;
+}
+
+.btn-primary, .btn-outline-primary {
+  background-color: #c6a800;
+  color: black;
+}

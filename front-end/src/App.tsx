@@ -1,4 +1,4 @@
-import { Navbar, Container, Nav, Button, Badge, NavDropdown } from 'react-bootstrap';
+import { Navbar, Container, Nav, Button, Badge, NavDropdown, Form, InputGroup, FormControl } from 'react-bootstrap';
 import {useContext, useEffect} from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Store } from './Store';
@@ -27,34 +27,69 @@ function App() {
     <div className='d-flex flex-column vh-100'>
       <ToastContainer position='bottom-center' limit={1}/>
       <header>
-        <Navbar expand="lg">
-          <Container>
-            <LinkContainer to='/'><Navbar.Brand>AMAZONCHIK-TS</Navbar.Brand></LinkContainer>
-          </Container>
-          <Nav>
-            <Button variant={mode} onClick={switchHandlerTheme}>
-              <i className={mode === 'light' ? 'fa fa-sun' : 'fa fa-moon'}></i>
-            </Button>
-            <Link to='/cart' className='nav-link'>Корзина
-            {
-              cart.cartItems.length > 0 && (
-                <Badge pill bg='danger'>
-                  {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
-                </Badge>
-              )
-            }</Link>
-            {userInfo ? (
-              <NavDropdown title={userInfo.name} id="basic-nav-dropdown">
-                <Link className='dropdown-item' to="#signout" onClick={signOutHandler}>Выйти
+        <Navbar expand="lg" className='d-flex flex-column align-items-stretch p-2 pb-0 mb-3' variant='dark' bg='dark'>
+          <div className='d-flex justify-content-between align-items-center'>
+            <LinkContainer to='/'><Navbar.Brand className='header-link'>AMAZONCHIK-TS</Navbar.Brand></LinkContainer>
+
+            <Form className='flex-grow-1 d-flex me-auto'>
+              <InputGroup>
+                <FormControl type="text" name='q' id='q' placeholder='Поиск...' aria-label='search' aria-describedby='button-search'></FormControl>
+                <Button variant='outline-primary' type='submit' id='button-search'>
+                  <i className='fa fa-search'></i>
+                </Button>
+              </InputGroup>
+            </Form>
+            <Navbar.Collapse>
+              <Nav className='w-100 justify-content-end'>
+                <Link to="#" className='nav-link header-link' onClick={switchHandlerTheme}>
+                  <i className={mode === 'light' ? 'fa fa-sun' : 'fa fa-moon'}></i>{" "}
+                  {mode === 'light' ? 'Light' : 'Dark'}
                 </Link>
-              </NavDropdown>
-            ) : (
-              <Link className='nav-link' to='signin'>
-                Войти
+                {userInfo ?
+                (
+                <NavDropdown className='header-link' title={`Привет, ${userInfo?.name}`}>
+                  <LinkContainer to='/profile'>
+                    <NavDropdown.Item>Профиль</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to='/orderhistory'>
+                    <NavDropdown.Item>История Заказов</NavDropdown.Item>
+                  </LinkContainer>
+                  <NavDropdown.Divider />
+                  <Link className='dropdown-item' to='#signout' onClick={signOutHandler}>Выйти</Link>
+                </NavDropdown>
+                ) 
+                : 
+                (
+                  <NavDropdown className='header-link' title={`Привет, Зайди`}>
+                    <LinkContainer to='/signin'>
+                      <NavDropdown.Item>Войти</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+                )
+              }
+              <Link to={"/orderhistory"} className='nav-link header-link'>История Заказов</Link>
+              <Link to="/cart" className='nav-link header-link p-0'>
+                {
+                  <span className='cart-badge'>
+                    {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                  </span>
+                }
+                <span>Корзина</span>
               </Link>
-            )
-            }
-          </Nav>
+              </Nav>
+            </Navbar.Collapse>
+          </div>
+          <div className='sub-header'>
+            <div className='d-flex'>
+              <Link to={'#'} className='nav-link header-link p-2'>
+                <i className='fas fa-bars'></i>Все
+              </Link>
+              {["В моде сегодня", "Популярное", "Распродажа"].map((x)=> (
+                <Link to={`/search?tag=${x}`} key={x} className='nav-link header-link p-2 px-3'>{x}</Link>
+              ))}
+            </div>
+          </div>
+          
         </Navbar>
       </header>
       <main>

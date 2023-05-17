@@ -5,6 +5,30 @@ import { OrderModel } from '../model/orderModel';
 import { Product } from '../model/prodModel';
 export const orderRouter = express.Router()
 
+
+orderRouter.get(
+    '/history',
+    isAuth,
+    asyncHandler(async(req: Request, res: Response) => {
+        const orders = await OrderModel.find({user: req.user._id})
+        res.json(orders)
+    })
+)
+
+orderRouter.get(
+    '/:id',
+    isAuth,
+    asyncHandler(async (req:Request, res: Response) => {
+        const order = await OrderModel.findById(req.params.id)
+        if (order) {
+            res.json(order)
+        } else {
+            res.status(404).json({message: 'заказ не найден'})
+        }
+    })
+)
+
+
 orderRouter.post('/', isAuth, asyncHandler(async(req: Request, res: Response) => {
     if (req.body.orderItems.length === 0) {
         res.status(400).send({message: 'Cart is Empty'})

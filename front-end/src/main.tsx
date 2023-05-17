@@ -23,6 +23,8 @@ import ShipPage from './pages/ShipPage.tsx';
 import ShipAddress from './pages/ShipAddress';
 import ProtectRoute from './components/ProtectRoute.tsx';
 import PlaceOrderPAge from './pages/PlaceOrderPAge.tsx';
+import OrderPage from './pages/OrderPage';
+import HisoryPage from './pages/HisoryPage.tsx';
 // axios.defaults.baseURL = process.env.NODE_ENV === 'development' ? 'http://localhost:4000' : '/';
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +38,8 @@ const router = createBrowserRouter(
         <Route path='shipping' element={<ShipPage />}></Route>
         <Route path='payment' element={<ShipAddress />}></Route>
         <Route path='placeorder' element={<PlaceOrderPAge />}></Route>
+        <Route path='/order/:id' element={<OrderPage />}></Route>
+        <Route path='/orderhistory' element={<HisoryPage />}></Route>
       </Route>
       
     </Route>
