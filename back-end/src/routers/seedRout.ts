@@ -16,3 +16,6 @@ sRouter.get('/', asyncHandler(async (req: Request, res: Response) => {
 
     res.json({createProd, createUser})
 }))
+
+
+sRouter.get('/')

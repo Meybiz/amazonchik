@@ -1,12 +1,27 @@
 import { Navbar, Container, Nav, Button, Badge, NavDropdown, Form, InputGroup, FormControl } from 'react-bootstrap';
-import {useContext, useEffect} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Store } from './Store';
 import { ToastContainer } from 'react-toastify';
 import { LinkContainer } from 'react-router-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
+import Search from './components/Search';
 function App() {
   const {state: {mode, cart, userInfo}, dispatch} = useContext(Store);
+  const [searchResults, setSearchResults] = useState([]);
+
+  const handleSearch = async (searchItem: string) => {
+    try {
+      const res = await fetch(`/api/search/${searchItem}`)
+      const searchRes = await res.json();
+
+      setSearchResults(searchRes);
+    }
+    catch (err) {
+      console.error(err);
+    }
+  }
+
   useEffect(() => {
     document.body.setAttribute('data-bs-theme', mode);
   }, [mode]);
@@ -30,15 +45,7 @@ function App() {
         <Navbar expand="lg" className='d-flex flex-column align-items-stretch p-2 pb-0 mb-3' variant='dark' bg='dark'>
           <div className='d-flex justify-content-between align-items-center'>
             <LinkContainer to='/'><Navbar.Brand className='header-link'>AMAZONCHIK-TS</Navbar.Brand></LinkContainer>
-
-            <Form className='flex-grow-1 d-flex me-auto'>
-              <InputGroup>
-                <FormControl type="text" name='q' id='q' placeholder='Поиск...' aria-label='search' aria-describedby='button-search'></FormControl>
-                <Button variant='outline-primary' type='submit' id='button-search'>
-                  <i className='fa fa-search'></i>
-                </Button>
-              </InputGroup>
-            </Form>
+            <Search />
             <Navbar.Collapse>
               <Nav className='w-100 justify-content-end'>
                 <Link to="#" className='nav-link header-link' onClick={switchHandlerTheme}>

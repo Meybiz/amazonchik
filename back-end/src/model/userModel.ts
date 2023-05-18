@@ -1,6 +1,6 @@
 import { modelOptions, prop, getModelForClass } from "@typegoose/typegoose";
 
-@modelOptions({schemaOptions: {timestamps: true}})
+@modelOptions({schemaOptions: {timestamps: true, collection: 'users'}})
 
 export class User {
     public _id?: string

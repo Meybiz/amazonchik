@@ -30,12 +30,14 @@ userRouter.post('/signup', asyncHandler(async (req: Request, res: Response) => {
         name: req.body.name,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password)
-    } as User)
+    } as User);
+
+    const savedUser = await user.save()
     res.json({
         _id: user._id,
         name: user.name,
         email: user.email,
         isAdmin: user.isAdmin,
-        token: genToken(user)
+        token: genToken(savedUser)
     })
 }))
