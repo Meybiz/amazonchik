@@ -11,8 +11,8 @@ import { Helmet } from 'react-helmet-async';
 import { Row, Col, Card, ListGroup } from 'react-bootstrap';
 export default function OrderPage() {
     const {state} = useContext(Store)
-    const {userInfo} = state
-
+    const { userInfo } = state
+    console.log(userInfo)
     const par = useParams()
     const {id: orderId} = par
 

@@ -1,26 +1,27 @@
-import { Navbar, Container, Nav, Button, Badge, NavDropdown, Form, InputGroup, FormControl } from 'react-bootstrap';
-import {useContext, useEffect, useState} from 'react';
+import { Navbar, Container, Nav, NavDropdown,} from 'react-bootstrap';
+import {useContext, useEffect} from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Store } from './Store';
 import { ToastContainer } from 'react-toastify';
 import { LinkContainer } from 'react-router-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import Search from './components/Search';
+import Icon from '../public/images/icons.png';
 function App() {
   const {state: {mode, cart, userInfo}, dispatch} = useContext(Store);
-  const [searchResults, setSearchResults] = useState([]);
+  // const [searchResults, setSearchResults] = useState([]);
 
-  const handleSearch = async (searchItem: string) => {
-    try {
-      const res = await fetch(`/api/search/${searchItem}`)
-      const searchRes = await res.json();
+  // const handleSearch = async (searchItem: string) => {
+  //   try {
+  //     const res = await fetch(`/api/search/${searchItem}`)
+  //     const searchRes = await res.json();
 
-      setSearchResults(searchRes);
-    }
-    catch (err) {
-      console.error(err);
-    }
-  }
+  //     setSearchResults(searchRes);
+  //   }
+  //   catch (err) {
+  //     console.error(err);
+  //   }
+  // }
 
   useEffect(() => {
     document.body.setAttribute('data-bs-theme', mode);
@@ -77,11 +78,13 @@ function App() {
               <Link to={"/orderhistory"} className='nav-link header-link'>История Заказов</Link>
               <Link to="/cart" className='nav-link header-link p-0'>
                 {
-                  <span className='cart-badge'>
-                    {cart.cartItems.reduce((a, c) => a + c.quantity, 0)}
+                  <span className='cart-badge' style={cart.cartItems.reduce((a, c) => a + c.quantity, 0) > 9 ? {right: '1.3%'} : {right: '1.55%'}}>
+                    {cart.cartItems.reduce((a, c) => a + c.quantity, 0)
+                      
+                    }
                   </span>
                 }
-                <span>Корзина</span>
+                <span className='p-2 header-link'><img src={Icon} /></span>
               </Link>
               </Nav>
             </Navbar.Collapse>
@@ -89,10 +92,10 @@ function App() {
           <div className='sub-header'>
             <div className='d-flex'>
               <Link to={'#'} className='nav-link header-link p-2'>
-                <i className='fas fa-bars'></i>Все
+                <i className='fas fa-bars p-1'></i>Все
               </Link>
               {["В моде сегодня", "Популярное", "Распродажа"].map((x)=> (
-                <Link to={`/search?tag=${x}`} key={x} className='nav-link header-link p-2 px-3'>{x}</Link>
+                <Link to={`/search?tag=${x}`} key={x} className='nav-link header-link p-2 px-2'>{x}</Link>
               ))}
             </div>
           </div>

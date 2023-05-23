@@ -15,7 +15,6 @@ export default function Products() {
   const { slug } = par;
   const {
     data: products,
-    refetch,
     isLoading,
     error,
   } = useGetProdDetailSlugQuery(slug!)

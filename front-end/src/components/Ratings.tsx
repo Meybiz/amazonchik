@@ -1,9 +1,10 @@
 function Ratings (props: {
     ratings: number,
     numReview?: number,
-    captions: string
+    captions?: string,
+    children?:React.ReactNode
 }) {
-  const { ratings, numReview, captions } = props;
+  const { ratings, numReview, captions, } = props;
   return <div className="ratings">
     <span>
         <i className={

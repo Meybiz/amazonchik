@@ -64,12 +64,12 @@ a.header-link, .header-link > a {
 }
 
 a.header-link:hover, .header-link:hover > a:hover {
-  color: #fff;
+  color: #c6a800;
   border: 1px solid black
 }
 
 .header .dropdown-menu, .header .dropdown-item {
-  color: black;
+  color: rgb(0, 0, 0);
   background-color: white;
 }
 .header .dropdown-item:hover {
@@ -83,12 +83,18 @@ a.header-link:hover, .header-link:hover > a:hover {
 .cart-badge {
   position: absolute;
   color: #f08000;
-  margin-left: 16px;
-  margin-top: -5px;
   font-weight: bold;
+  font-size: 1.1rem;
+  top: 4px;
 }
 
 .btn-primary, .btn-outline-primary {
   background-color: #c6a800;
-  color: black;
+  color: rgb(0, 0, 0);
+}
+
+span.p-2.header-link img{
+  width: 35px;
+  height: 40px;
+  margin-top: 10px;
 }

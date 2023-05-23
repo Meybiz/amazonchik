@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useContext, useEffect, useState} from 'react'
+import { useContext, useState, useEffect} from 'react'
 import { Store } from '../Store';
 import { Helmet } from 'react-helmet-async';
 import ChekStep from '../components/ChekStep';
@@ -13,12 +13,11 @@ import { Form, Button } from 'react-bootstrap';
         cart: { shipAddress },
     } = state
 
-
-    // useEffect(() => {
-    //     if (!userInfo) {
-    //         nav('/signin?redirect=/shipping')
-    //     }
-    // }, [userInfo, nav])
+    useEffect(() => {
+        if (!userInfo) {
+            nav('/signin?redirect=/shipping')
+        }
+    }, [userInfo, nav])
 
     const [fullName, setFullName] = useState(shipAddress.fullName || '')
     const [address, setAddress] = useState(shipAddress.address || '')

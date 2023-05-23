@@ -1,6 +1,7 @@
-import express from "express";
+import express, {Request, Response} from "express";
 import dotenv from 'dotenv';
 import cors from 'cors';
+import path from 'path'
 import mongoose from "mongoose";
 import { productRouter } from "./routers/prodRouter";
 import { sRouter } from "./routers/seedRout";
@@ -35,8 +36,12 @@ app.use('/api/users', userRouter)
 app.use('/api/orders', orderRouter)
 app.use('/api/seed', sRouter)
 
+app.use(express.static(path.join(__dirname,'../../front-end/dist')))
 
-const PORT = 4000;
+app.get('*', (req: Request, res: Response) => {
+    res.sendFile(path.join(__dirname, '../../front-end/dist/index.html'))
+})
+const PORT: number = parseInt((process.env.PORT || '4000') as string, 10) ;
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
 })

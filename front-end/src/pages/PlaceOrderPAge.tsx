@@ -16,7 +16,7 @@ export default function PlaceOrderPAge() {
     const nav = useNavigate()
     const {state, dispatch} = useContext(Store)
     const {cart, userInfo} = state
-
+    console.log(userInfo)
     const round = (num: number) => Math.round(num * 100 + Number.EPSILON) / 100
 
     cart.itemPrice = round(cart.cartItems.reduce((a, b) => a + b.price * b.quantity, 0))
