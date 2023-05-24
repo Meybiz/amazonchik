@@ -53,7 +53,7 @@ img.thumbnail {
 
 .navbar-brand {
   font-weight: bold;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
 }
 
 a.header-link, .header-link > a {
@@ -97,4 +97,16 @@ span.p-2.header-link img{
   width: 35px;
   height: 40px;
   margin-top: 10px;
+}
+.navbar-collapse {
+  flex-grow: 0;
+  flex-basis: 20%;
+}
+.navbar-collapse.collapse {
+  display: block;
+  flex-direction: row;
+}
+
+form.flex-grow-1.d-flex.me-auto {
+  display: none;
 }
