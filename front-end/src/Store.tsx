@@ -47,6 +47,12 @@ type Action = | {
     payload: string
 } | {
     type: 'CLEAR_CART', 
+} | {
+    type: 'CHANGE_NAME',
+    payload: string
+} | {
+    type: 'CHANGE_EMAIL',
+    payload: string
 }
 
 
@@ -111,6 +117,16 @@ function reducer(state: AppState, action: Action): AppState {
                             return {
                                 ...state, cart: {...state.cart, cartItems: []}
                             }
+                        case 'CHANGE_NAME':
+                            const labelName = action.payload
+                            const update = {...state.userInfo, _id: state.userInfo!._id, name: labelName, email: state.userInfo!.email, token: state.userInfo!.token, isAdmin: state.userInfo!.isAdmin}
+                            localStorage.setItem('userInfo', JSON.stringify(update))
+                            return {...state, userInfo: update}
+                        case 'CHANGE_EMAIL':
+                            const labelEmail = action.payload
+                            const updates = {...state.userInfo, _id: state.userInfo!._id, name: state.userInfo!.name, email: labelEmail, token: state.userInfo!.token, isAdmin: state.userInfo!.isAdmin}
+                            localStorage.setItem('userInfo', JSON.stringify(updates))
+                            return {...state, userInfo: updates}
                 default:
             return state
     }

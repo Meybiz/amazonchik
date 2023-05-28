@@ -36,3 +36,22 @@ export const signupMutate = () => useMutation({
         })
     ).data,
 })
+
+
+export const nameMutate = () => useMutation({
+    mutationFn: async({
+        name,
+        email,
+    }: {
+        name: string,
+        email: string,
+    }) =>  {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo')!)
+        const updateInfo = {...userInfo, name, email}
+        const res = await apiClient.put<UserInfo>(`api/users/updateemail`, updateInfo)
+        console.log(res)
+        localStorage.setItem('userInfo', JSON.stringify(res.data))
+        
+        return res.data
+    }
+})

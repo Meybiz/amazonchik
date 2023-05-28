@@ -3,6 +3,7 @@ import  asyncHandler  from 'express-async-handler';
 import { User, UserModel } from '../model/userModel';
 import  bcrypt  from 'bcryptjs';
 import { genToken } from './../types/utels';
+import apiClient from './../../../front-end/src/apiClient';
 
 export const userRouter = express.Router()
 
@@ -40,4 +41,61 @@ userRouter.post('/signup', asyncHandler(async (req: Request, res: Response) => {
         isAdmin: user.isAdmin,
         token: genToken(savedUser)
     })
+}))
+
+
+userRouter.put('/updatename', asyncHandler(async(req: Request, res: Response) => {
+    const {name} = req.body
+    
+
+    try {
+        const user = await UserModel.findOne({token: req.body.token})
+        if (!user) {
+            res.status(404).json({message: 'Не найдено профиля'})
+            return
+        }
+        user.name = name
+        const updUser = await user.save()
+
+        res.json({
+            _id: updUser._id,
+            name: updUser.name,
+            email: updUser.email,
+            isAdmin: updUser.isAdmin,
+            token: genToken(updUser),
+        })
+    }
+    catch (err){
+        console.error('Ошибка при изменении имени', err)
+        res.status(500).json({message: 'Ошибка сервера'})
+        
+    }
+}))
+
+userRouter.put('/updateemail', asyncHandler(async(req: Request, res: Response) => {
+    const {email} = req.body
+
+    try {
+        const user = await UserModel.findOne({token: req.body.token})
+
+        if(!user) {
+            res.status(404).json({message: 'Профиль с таким email не найден'})
+            return
+        }
+
+        user.email = email
+        const updEmail = await user.save()
+
+        res.json({
+            _id: updEmail._id,
+            name:updEmail.name,
+            email: updEmail.email,
+            isAdmin: updEmail.isAdmin,
+            token: genToken(updEmail)
+        })
+    }
+    catch (err){
+        console.error('Ошибка при обновлении имени на сервере', err)
+        res.status(500).json({message: 'Ошибка при сравнении данных'})
+    }
 }))

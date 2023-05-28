@@ -11,11 +11,12 @@ import { orderRouter } from "./routers/orderRouter";
 
 dotenv.config();
 const app = express();
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost/amazonchikdb';
+const MONGODB_URI = process.env.MONGODB_URI_REMOTE || 'mongodb://localhost/amazonchikdb';
 mongoose.set('strictQuery', true);
 
 mongoose.connect(MONGODB_URI).then(() => {
     console.log("Connected to MongoDB");
+    console.log(MONGODB_URI)
 }).catch(() => {
     console.log('Error DB')
 })
