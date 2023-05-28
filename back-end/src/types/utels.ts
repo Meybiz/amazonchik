@@ -8,6 +8,7 @@ export const genToken = (user: User) => {
         _id: user._id,
         name: user.name,
         email: user.email,
+        balance: user.balance,
         isAdmin: user.isAdmin
     },
     process.env.JWTSECRET || 'somethingsecret',
@@ -27,6 +28,7 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
             _id: string
             name: string
             email: string
+            balance: number
             isAdmin: boolean
             token: string
         }

@@ -49,7 +49,7 @@ userRouter.put('/updatename', asyncHandler(async(req: Request, res: Response) =>
     
 
     try {
-        const user = await UserModel.findOne({token: req.body.token})
+        const user = await UserModel.findOne({_id: req.body._id})
         if (!user) {
             res.status(404).json({message: 'Не найдено профиля'})
             return
@@ -76,8 +76,8 @@ userRouter.put('/updateemail', asyncHandler(async(req: Request, res: Response) =
     const {email} = req.body
 
     try {
-        const user = await UserModel.findOne({token: req.body.token})
-
+        const user = await UserModel.findOne({_id: req.body._id})
+        console.log(user)
         if(!user) {
             res.status(404).json({message: 'Профиль с таким email не найден'})
             return

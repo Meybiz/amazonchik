@@ -1,6 +1,6 @@
 import { modelOptions, prop, getModelForClass } from "@typegoose/typegoose";
 
-@modelOptions({ schemaOptions: { timestamps: true } })
+@modelOptions({ schemaOptions: { timestamps: true, collection: 'products' } })
 export class Product {
     public _id?: string
     @prop({required: true})

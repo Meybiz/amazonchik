@@ -59,18 +59,18 @@ export const sampleUsers: User[] = [
         name: 'Victor',
         email: 'admin@amazonchik.ru',
         password: bcrypt.hashSync('002003'),
-        isAdmin: true
+        isAdmin: true,
     },
     {
         name: 'Dasha',
         email: 'dasha@amazonchik.ru',
         password: bcrypt.hashSync('001003'),
-        isAdmin: false
+        isAdmin: false,
     },
     {
         name: 'Denis',
         email: 'denis@amazonchik.ru',
         password: bcrypt.hashSync('123456'),
-        isAdmin: false
+        isAdmin: false,
     },
 ]
