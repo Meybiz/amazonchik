@@ -41,13 +41,26 @@ export const signupMutate = () => useMutation({
 export const nameMutate = () => useMutation({
     mutationFn: async({
         name,
-        email,
     }: {
         name: string,
+    }) =>  {
+        const userInfo = JSON.parse(localStorage.getItem('userInfo')!)
+        const updateInfo = {...userInfo, name}
+        const res = await apiClient.put<UserInfo>(`api/users/updatename`, updateInfo)
+        console.log(res)
+        localStorage.setItem('userInfo', JSON.stringify(res.data))
+        
+        return res.data
+    }
+})
+export const emailMutate = () => useMutation({
+    mutationFn: async({
+        email,
+    }: {
         email: string,
     }) =>  {
         const userInfo = JSON.parse(localStorage.getItem('userInfo')!)
-        const updateInfo = {...userInfo, name, email}
+        const updateInfo = {...userInfo, email}
         const res = await apiClient.put<UserInfo>(`api/users/updateemail`, updateInfo)
         console.log(res)
         localStorage.setItem('userInfo', JSON.stringify(res.data))

@@ -119,12 +119,12 @@ function reducer(state: AppState, action: Action): AppState {
                             }
                         case 'CHANGE_NAME':
                             const labelName = action.payload
-                            const update = {...state.userInfo, _id: state.userInfo!._id, name: labelName, email: state.userInfo!.email, token: state.userInfo!.token, isAdmin: state.userInfo!.isAdmin}
+                            const update = {...state.userInfo, balance: state.userInfo!.balance, _id: state.userInfo!._id, name: labelName, email: state.userInfo!.email, token: state.userInfo!.token, isAdmin: state.userInfo!.isAdmin}
                             localStorage.setItem('userInfo', JSON.stringify(update))
                             return {...state, userInfo: update}
                         case 'CHANGE_EMAIL':
                             const labelEmail = action.payload
-                            const updates = {...state.userInfo, _id: state.userInfo!._id, name: state.userInfo!.name, email: labelEmail, token: state.userInfo!.token, isAdmin: state.userInfo!.isAdmin}
+                            const updates = {...state.userInfo, balance: state.userInfo!.balance, _id: state.userInfo!._id, name: state.userInfo!.name, email: labelEmail, token: state.userInfo!.token, isAdmin: state.userInfo!.isAdmin}
                             localStorage.setItem('userInfo', JSON.stringify(updates))
                             return {...state, userInfo: updates}
                 default:

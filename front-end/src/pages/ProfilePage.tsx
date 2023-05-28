@@ -2,7 +2,7 @@ import Form from 'react-bootstrap/form'
 import Button from 'react-bootstrap/button'
 import { useContext, useState } from 'react';
 import { Store } from '../Store';
-import { nameMutate } from '../hooks/userHook';
+import { nameMutate, emailMutate } from '../hooks/userHook';
 export default function ProfilePage() {
 
     const { state, dispatch } = useContext(Store)
@@ -12,6 +12,7 @@ export default function ProfilePage() {
     const [labelEmail, setLabelEmail] = useState(userInfo?.email)
 
   const mut = nameMutate()
+  const emailMut = emailMutate()
     const handleClick = () => {
         setEdit(true)
     }
@@ -24,7 +25,7 @@ export default function ProfilePage() {
     }
     const handleSave = () => {
       if (typeof labelName !== 'undefined' && typeof labelEmail !== 'undefined') {
-        mut.mutate({ name: labelName, email: labelEmail}, {
+        mut.mutate({ name: labelName}, {
         onSuccess: (data) => {
           
           dispatch({ type: 'CHANGE_NAME', payload: data.name })
@@ -35,6 +36,17 @@ export default function ProfilePage() {
           console.error('Ошибка при обновлении имени', error)
         }
       })
+      emailMut.mutate({ email: labelEmail}, {
+        onSuccess: (data) => {
+          
+          dispatch({ type: 'CHANGE_EMAIL', payload: data.email })
+          setEdit(false)
+        },
+        onError: (error) => {
+          console.error('Ошибка при обновлении почты', error)
+        }
+      })
+
       }
       
 
