@@ -1,6 +1,7 @@
 import express, {Request, Response} from 'express';
 import  asyncHandler  from 'express-async-handler';
 import { User, UserModel } from '../model/userModel';
+import { ProdModel } from '../model/prodModel';
 import  bcrypt  from 'bcryptjs';
 import { genToken } from './../types/utels';
 import apiClient from './../../../front-end/src/apiClient';

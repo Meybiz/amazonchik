@@ -7,7 +7,6 @@ type AppState = {
     cart: Cart,
     userInfo?: UserInfo,
 }
-
 const initialState: AppState = {
     userInfo: localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')!) : null,
     mode: localStorage.getItem('mode') ? localStorage.getItem('mode')! : window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
@@ -19,7 +18,7 @@ const initialState: AppState = {
         shipPrice: 0,
         taxprice: 0,
         totalPrice: 0
-    }
+    },
 }
 
 type Action = | {
@@ -57,7 +56,7 @@ type Action = | {
 
 
 function reducer(state: AppState, action: Action): AppState {
-    switch (action.type) {
+    switch (action.type) {            
         case 'SWITCH_MODE':
             localStorage.setItem('mode', state.mode === 'dark' ? 'light' : 'dark')
             return {
@@ -127,6 +126,7 @@ function reducer(state: AppState, action: Action): AppState {
                             const updates = {...state.userInfo, balance: state.userInfo!.balance, _id: state.userInfo!._id, name: state.userInfo!.name, email: labelEmail, token: state.userInfo!.token, isAdmin: state.userInfo!.isAdmin}
                             localStorage.setItem('userInfo', JSON.stringify(updates))
                             return {...state, userInfo: updates}
+                            
                 default:
             return state
     }

@@ -1,6 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import apiClient from "../apiClient";
 import { Product } from "../types/Product";
+// import { Product } from './../../../back-end/src/model/prodModel';
+
 export const useGetProdQuery = () => 
     useQuery({
         queryKey: ['products'],
@@ -13,4 +15,3 @@ export const useGetProdQuery = () =>
             queryFn: async () => 
                 (await apiClient.get<Product>(`api/products/slug/${slug}`)).data,
         })
-    
