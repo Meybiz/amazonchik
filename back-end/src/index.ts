@@ -38,6 +38,16 @@ app.use('/api/seed', sRouter)
 
 app.use(express.static(path.join(__dirname,'../../front-end/dist')))
 
+app.get('/api/products', async (req, res) => {
+    const searchResult = req.body
+    try {
+        res.status(200).json({message: 'ПОИИИСК', products: searchResult})
+    } catch (err){
+        console.error('Ошибка', err)
+        res.status(500).json({error: "Ошибка при поиске"})
+    }
+})
+
 app.get('*', (req: Request, res: Response) => {
     res.sendFile(path.join(__dirname, '../../front-end/dist/index.html'))
 })
@@ -54,18 +64,11 @@ app.post('/api/products', async (req, res) => {
         res.status(500).json({error: "Ошибка при сохранении"})
     }
 })
-// app.post('/api/products', async (req: Request, res: Response) => {
-//     try {
-//       const productData = req.body; // JSON данные, отправленные клиентом
-//       const product = new Product(productData); // Создание нового экземпляра модели Product
-//       const savedProduct = await product.save(); // Сохранение продукта в базе данных
-//       res.json(savedProduct); // Отправка ответа клиенту с сохраненным продуктом
-//     } catch (error) {
-//       console.error('Ошибка при сохранении продукта', error);
-//       res.status(500).json({ error: 'Произошла ошибка при сохранении продукта' });
-//     }
-//   });
+
 const PORT: number = parseInt((process.env.PORT || '4000') as string, 10) ;
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
 })
+
+
+

@@ -1,5 +1,5 @@
 import { Navbar, Container, Nav, NavDropdown,} from 'react-bootstrap';
-import {useContext, useEffect} from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import { Store } from './Store';
 import { ToastContainer } from 'react-toastify';
@@ -7,21 +7,9 @@ import { LinkContainer } from 'react-router-bootstrap';
 import 'react-toastify/dist/ReactToastify.css';
 import Search from './components/Search';
 import Icon from '../public/images/icons.png';
+import axios from 'axios';
 function App() {
   const {state: {mode, cart, userInfo}, dispatch} = useContext(Store);
-  // const [searchResults, setSearchResults] = useState([]);
-
-  // const handleSearch = async (searchItem: string) => {
-  //   try {
-  //     const res = await fetch(`/api/search/${searchItem}`)
-  //     const searchRes = await res.json();
-
-  //     setSearchResults(searchRes);
-  //   }
-  //   catch (err) {
-  //     console.error(err);
-  //   }
-  // }
 
   useEffect(() => {
     document.body.setAttribute('data-bs-theme', mode);
