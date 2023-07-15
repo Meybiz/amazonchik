@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "name": "front-end",
   "private": true,
   "version": "0.0.0",
@@ -38,4 +39,25 @@
     "typescript": "^5.0.2",
     "vite": "^4.3.0"
   }
+=======
+  "name": "amazon-clone",
+  "version": "1.0.0",
+  "description": "<img alt=\"GitHub code size in bytes\" src=\"https://img.shields.io/github/languages/code-size/Meybiz/amazonchik?color=blue&label=size&style=for-the-badge\">\r ## Hello People",
+  "main": "index.js",
+  "scripts": {
+    "build":"cd back-end && npm install && npm run build && cd ../front-end && npm install && npm run build",
+    "start": "node back-end/build/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Meybiz/amazonchik.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Meybiz/amazonchik/issues"
+  },
+  "homepage": "https://github.com/Meybiz/amazonchik#readme"
+>>>>>>> 09553905dbf76c56aac6924253135ecde3c8111a
 }
